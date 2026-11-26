@@ -23,21 +23,21 @@ if age >= 80:
 if sleep <= 8 or sleep >= 12:
   wellness -= 5
 
-if water <= 7 or water >= 18:
-  wellness -= 5
+if water <= 7 or water >= 16:
+  wellness -= 10
 
 if exercise <= 0.5:
-  wellness -= 5
+  wellness -= 10
 
 if screentime > 2:
-  wellness -= screentime
+  wellness -= screentime * 5
 
 if mood == "Happy":
   wellness += 10
 elif mood == "Sad":
-  wellness -= 3
-elif mood == "Stressed":
   wellness -= 5
+elif mood == "Stressed":
+  wellness -= 10
 else:
   wellness += 5
 
