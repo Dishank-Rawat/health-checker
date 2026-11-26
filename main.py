@@ -45,3 +45,13 @@ else:
 
 st.write(f"{name} Wellness score for today is: {wellness}")
 st.progress(wellness)
+
+if st.button("Clear Form"):
+    st.session_state.name = ""
+    st.session_state.sleep = 0
+    st.session_state.age = 1
+    st.session_state.exercise = 0
+    st.session_state.screentime = 0
+    st.session_state.water = 0
+    st.session_state.mood = "Happy"
+    st.rerun()
