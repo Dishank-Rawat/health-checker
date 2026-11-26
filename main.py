@@ -41,5 +41,5 @@ elif mood == "Stressed":
 else:
   wellness += 5
 
-st.write(f"Your wellness score for today is: {wellness}")
+st.write(f"{name} wellness score for today is: {wellness}")
 st.progress(wellness)
