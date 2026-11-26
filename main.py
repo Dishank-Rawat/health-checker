@@ -3,15 +3,43 @@ import streamlit as st
 st.header("Welcome to this daily health checker app")
 st.write("Made by Dishank Rawat")
 
-st.text_input("Please enter your name")
-st.number_input("Please enter your age", 0, 100)
+name = st.text_input("Please enter your name")
+age = st.number_input("Please enter your age", 0, 100)
 
-st.number_input("Please enter how many hours of sleep do you get", 0, 24)
+sleep = st.number_input("Please enter how many hours of sleep do you get", 0, 24)
 
-st.number_input("Please enter how many glasses of water you consume", 0, 50)
+water = st.number_input("Please enter how many glasses of water you consume", 0, 50)
 
-st.number_input("Please enter your daily exercise duration (in hours)", 0, 8)
+exercise = st.number_input("Please enter your daily exercise duration (in hours)", 0, 8)
 
-st.number_input("Please enter your daily screen time (in hours)", 0, 24)
+screentime = st.number_input("Please enter your daily screen time (in hours)", 0, 24)
 
-st.selectbox("Please select your current mood", ["Happy", "Sad", "Stressed", "Energetic"])
+mood = st.selectbox("Please select your current mood", ["Happy", "Sad", "Stressed", "Energetic"])
+
+wellness = 100
+if age >= 80:
+  wellness -= 5
+
+if sleep <= 8 or sleep >= 12:
+  wellness -= 5
+
+if water <= 7 or water >= 18:
+  wellness -= 5
+
+if exercise <= 0.5:
+  wellness -= 5
+
+if screentime > 2:
+  wellness -= screentime
+
+if mood == "Happy":
+  wellness += 10
+elif mood == "Sad":
+  wellness -= 3
+elif mood == "Stressed":
+  wellness -= 5
+else:
+  wellness += 5
+
+st.write(f"Your wellness score for today is: {wellness}")
+st.progress(wellness)
