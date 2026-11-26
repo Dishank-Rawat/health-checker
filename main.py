@@ -1,57 +1,90 @@
+
 import streamlit as st
 
 st.header("Welcome to this daily health checker app")
 st.write("Made by Dishank Rawat")
 
-name = st.text_input("Please enter your name")
-age = st.number_input("Please enter your age", 0, 100)
+with st.form("health_form"):
 
-sleep = st.number_input("Please enter how many hours of sleep do you get", 0, 24)
+    name = st.text_input("Please enter your name", key="name")
+    age = st.number_input("Please enter your age", 0, 100, key="age")
 
-water = st.number_input("Please enter how many glasses of water you consume", 0, 50)
+    sleep = st.number_input("Please enter how many hours of sleep do you get", 0, 24, key="sleep")
 
-exercise = st.number_input("Please enter your daily exercise duration (in hours)", 0, 8)
+    water = st.number_input("Please enter how many glasses of water you consume", 0, 50, key="water")
 
-screentime = st.number_input("Please enter your daily screen time (in hours)", 0, 24)
+    exercise = st.number_input("Please enter your daily exercise duration (in hours)", 0.0, 8.0, key="exercise")
 
-mood = st.selectbox("Please select your current mood", ["Happy", "Sad", "Stressed", "Energetic"])
+    screentime = st.number_input("Please enter your daily screen time (in hours)", 0, 24, key="screentime")
 
-wellness = 100
-if age >= 80:
-  wellness -= 5
+    mood = st.selectbox("Please select your current mood", ["Happy", "Sad", "Stressed", "Energetic"], key="mood")
 
-if sleep <= 8 or sleep >= 12:
-  wellness -= 5
+    submit = st.form_submit_button("Check Wellness")
 
-if water <= 7 or water >= 16:
-  wellness -= 10
+if submit:
 
-if exercise <= 0.5:
-  wellness -= 10
-else:
-  wellness += 3 * exercise
+    wellness = 100
 
-if screentime > 2:
-  wellness -= screentime * 5
+    if age >= 80:
+        wellness -= 5
 
-if mood == "Happy":
-  wellness += 10
-elif mood == "Sad":
-  wellness -= 5
-elif mood == "Stressed":
-  wellness -= 10
-else:
-  wellness += 5
+    if sleep < 8 or sleep > 12:
+        wellness -= 5
 
-st.write(f"{name} Wellness score for today is: {wellness}")
-st.progress(wellness)
+    if water < 7 or water > 16:
+        wellness -= 10
+
+    if exercise <= 0.5:
+        wellness -= 10
+    else:
+        wellness += 3 * exercise
+
+    if screentime > 2:
+        wellness -= screentime * 5
+
+    if mood == "Happy":
+        wellness += 10
+    elif mood == "Sad":
+        wellness -= 5
+    elif mood == "Stressed":
+        wellness -= 10
+    else:
+        wellness += 5
+
+    wellness = max(0, min(100, int(wellness)))
+
+    st.write(f"{name}, your wellness score for today is: {wellness}")
+
+    st.progress(wellness)
+
+    if wellness >= 80:
+        st.success("Excellent, keep maintaining your healthy habits.")
+    elif wellness >= 50:
+        st.warning("Good effort. There is room for improvement.")
+    else:
+        st.error("Try to improve your daily health habits.")
 
 if st.button("Clear Form"):
-    st.session_state.name = ""
-    st.session_state.sleep = 0
-    st.session_state.age = 1
-    st.session_state.exercise = 0
-    st.session_state.screentime = 0
-    st.session_state.water = 0
-    st.session_state.mood = "Happy"
+
+    if "name" in st.session_state:
+        del st.session_state.name
+
+    if "age" in st.session_state:
+        del st.session_state.age
+
+    if "sleep" in st.session_state:
+        del st.session_state.sleep
+
+    if "water" in st.session_state:
+        del st.session_state.water
+
+    if "exercise" in st.session_state:
+        del st.session_state.exercise
+
+    if "screentime" in st.session_state:
+        del st.session_state.screentime
+
+    if "mood" in st.session_state:
+        del st.session_state.mood
+
     st.rerun()
