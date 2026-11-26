@@ -28,6 +28,8 @@ if water <= 7 or water >= 16:
 
 if exercise <= 0.5:
   wellness -= 10
+else:
+  wellness += 3 * exercise
 
 if screentime > 2:
   wellness -= screentime * 5
